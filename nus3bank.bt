@@ -1,0 +1,65 @@
+//------------------------------------------------
+//--- 010 Editor v9.0 Binary Template
+//
+//      File: NUS3BANK from Smash Ultimate
+//   Authors: jam1garner
+//   Version: 
+//   Purpose: 
+//  Category: Archive
+// File Mask: *.nus3bank
+//  ID Bytes: 4E 55 53 33
+//   History: 
+//------------------------------------------------
+
+struct HEADER {
+    char magic[4]<bgcolor=cGreen>; //nus3
+    uint filesize;
+} Header;
+
+struct AUDIINDX {
+    char magic[8]<bgcolor=cGreen>; // AUDIINDX
+    uint size<bgcolor=cPurple>; // 4
+    uint count; // 1, probably a track count
+} Audiindx;
+
+struct TNID {
+    char magic[4]<bgcolor=cGreen>; // TNID
+    uint size<bgcolor=cPurple>; // 4
+    uint unk; // 4, id maybe?
+} Tnid;
+
+struct NMOF {
+    char magic[4]<bgcolor=cGreen>; // NMOF
+    uint size<bgcolor=cPurple>; // 4
+    uint name_offsets[Audiindx.count]; // This is probably wrong
+} Nmof;
+
+struct ADOF {
+    char magic[4]<bgcolor=cGreen>; // ADOF
+    uint size<bgcolor=cPurple>; // 8
+    uint fileOffset<bgcolor=cBlue>;
+    uint fileSize<bgcolor=cRed>;
+} Adof;
+
+struct TNNM {
+    char magic[4]<bgcolor=cGreen>; // TNNM
+    uint size<bgcolor=cPurple>;
+    char string_section[size];
+} Tnnm;
+
+struct JUNK {
+    char magic[4]<bgcolor=cGreen>; // TNNM
+    uint size<bgcolor=cPurple>; // 8
+    byte spacing[size];
+} Junk;
+
+struct PACK {
+    char magic[4]<bgcolor=cGreen>; // TNNM
+    uint fileSize<bgcolor=cRed>;
+} Pack;
+
+FSeek(Adof.fileOffset);
+if (FileSize() - FTell() < Adof.fileSize)
+    byte file[FileSize() - FTell()]<bgcolor=cYellow>;
+else
+    byte file[Adof.fileSize]<bgcolor=cYellow>;
