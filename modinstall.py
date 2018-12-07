@@ -22,6 +22,7 @@ def installMod(archive, modFilename):
             f_backup.write(backup)
         archive.seek(offset)
         archive.write(modContents)
+    print("Mod '{}' successfully installed".format(modFilename))
 
 def main(args):
     if len(args) == 0 or args == ['--help']:
