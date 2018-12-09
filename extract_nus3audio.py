@@ -8,7 +8,7 @@ def readString(myfile):
     while True:
         c = myfile.read(1)
         if c == b'\x00':
-            return b''.join(chars).decode('ascii')
+            return b''.join(chars).decode('latin')
         chars.append(c)
 
 with open('nus3_found.csv', 'r') as f:
@@ -22,6 +22,10 @@ with open('data.arc', 'rb') as f:
         f.seek(offset + (0x48 if isNusaudio else 0xAD))
         fileName = readString(f)
         fullFileName = "{}_{}.{}".format(fileName, hex(offset), "nus3audio" if isNusaudio else "nus3bank")
+        try:
+            print(fullFileName)
+        except:
+            pass
         f.seek(offset)
         with open('nus3audio_uncompressed/'+fullFileName, 'wb') as out:
             out.write(f.read(fileSize))
