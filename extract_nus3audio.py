@@ -16,16 +16,19 @@ with open('nus3_found.csv', 'r') as f:
 
 with open('data.arc', 'rb') as f:
     for offset in offsets:
-        f.seek(offset + 4)
-        fileSize = uint32(f) + 8
-        isNusaudio = (f.read(4) == b'AUDI')
-        f.seek(offset + (0x48 if isNusaudio else 0xAD))
-        fileName = readString(f)
-        fullFileName = "{}_{}.{}".format(fileName, hex(offset), "nus3audio" if isNusaudio else "nus3bank")
         try:
-            print(fullFileName)
+            f.seek(offset + 4)
+            fileSize = uint32(f) + 8
+            isNusaudio = (f.read(4) == b'AUDI')
+            f.seek(offset + (0x48 if isNusaudio else 0xAD))
+            fileName = readString(f)
+            fullFileName = "{}_{}.{}".format(fileName, hex(offset), "nus3audio" if isNusaudio else "nus3bank")
+            try:
+                print(fullFileName)
+            except:
+                pass
+            f.seek(offset)
+            with open('nus3audio_uncompressed/'+fullFileName, 'wb') as out:
+                out.write(f.read(fileSize))
         except:
             pass
-        f.seek(offset)
-        with open('nus3audio_uncompressed/'+fullFileName, 'wb') as out:
-            out.write(f.read(fileSize))
