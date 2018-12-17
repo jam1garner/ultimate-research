@@ -1,14 +1,14 @@
 //------------------------------------------------
 //--- 010 Editor v7.0 Binary Template
 //
-//      File: 
-//   Authors: 
-//   Version: 
-//   Purpose: 
-//  Category: 
-// File Mask: 
-//  ID Bytes: 
-//   History: 
+//      File: shpcanim
+//   Authors: jam1garner
+//   Version: 1
+//   Purpose: Animation
+//  Category: Animation
+// File Mask: *.shpcanim
+//  ID Bytes: 53 48 41 4E
+//   History: Smash Ultimate
 //------------------------------------------------
 
 LittleEndian();
