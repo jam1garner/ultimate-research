@@ -1,13 +1,13 @@
 //------------------------------------------------
 //--- 010 Editor v9.0 Binary Template
 //
-//      File: NUS3BANK from Smash Ultimate
+//      File: nus3audio.bt
 //   Authors: jam1garner
-//   Version: 
-//   Purpose: 
+//   Version: 1.0
+//   Purpose: Music Archive
 //  Category: Archive
 // File Mask: *.nus3audio
-//  ID Bytes: 4E 55 53 33
+//  ID Bytes: 4E 55 53 33 //nus3
 //   History: 
 //------------------------------------------------
 
