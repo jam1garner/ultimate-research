@@ -1,0 +1,59 @@
+//------------------------------------------------
+//--- 010 Editor v9.0 Binary Template
+//
+//      File: lopus
+//   Authors: jam1garner
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+BigEndian();
+
+struct NamcoHeader {
+    char magic[4]<bgcolor=cYellow>;
+    uint unk<bgcolor=cGray>;
+    uint sampleCount;
+    uint channelCount;
+    uint sampleRate;
+    uint loopStart;
+    uint loopEnd;
+    uint loopingBitfield<format=binary>;
+    uint headerSize;
+    uint fileSize;
+} namco_header<bgcolor=cRed>;
+
+LittleEndian();
+FSeek(namco_header.headerSize);
+
+struct StandardHeader {
+    uint identifier; // 0x80000001
+    uint headerSize; // 0x18
+    ubyte version;
+    ubyte channelCount;
+    ushort frameSize;
+    uint sampleRate;
+    uint dataOffset;
+    FSkip(0x8);
+    uint preskip;
+    FSkip(dataOffset - 0x20);
+} standard_header<bgcolor=cBlue>;
+
+struct DataHeader {
+    uint type;
+    uint size;
+} data_header<bgcolor=cPurple>;
+
+local int frameCount = data_header.size / standard_header.frameSize;
+
+BigEndian();
+
+struct OpusFrame {
+    uint data_size<bgcolor=cLtGreen>;
+    uint finalRange<bgcolor=cLtGreen>;
+    ubyte data[data_size]<bgcolor=cAqua>;
+    FSkip(standard_header.frameSize - (data_size + 0x8));
+} data_frames[frameCount];
